@@ -2,8 +2,8 @@ package com.yuan.gmall.gmalluser.controller;
 
 
 
-import com.yuan.gmall.gmalluser.bean.UserInfo;
-import com.yuan.gmall.gmalluser.service.UserService;
+import com.yuan.gmall.bean.UserInfo;
+import com.yuan.gmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
