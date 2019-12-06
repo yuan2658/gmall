@@ -1,7 +1,7 @@
-package com.yuan.gmall.gmalluser.service;
+package com.yuan.gmall.service;
 
 
-import com.yuan.gmall.gmalluser.bean.UserInfo;
+import com.yuan.gmall.bean.UserInfo;
 
 import java.util.List;
 

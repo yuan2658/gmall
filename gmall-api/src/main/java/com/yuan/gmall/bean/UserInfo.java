@@ -1,4 +1,4 @@
-package com.yuan.gmall.gmalluser.bean;
+package com.yuan.gmall.bean;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
