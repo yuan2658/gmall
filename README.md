@@ -12,3 +12,6 @@ dubbo安装: 下载dubbo-admin 打war包 直接解压
 ```<Context docBase="/opt/dubbo-admin/" path="" reloadable="true"/>```
 
 --------------------------
+12.7 zookeeper，dubbo和springboot整合
+文件配置参数 包名一致 注意包版本冲突
+-----------------------
