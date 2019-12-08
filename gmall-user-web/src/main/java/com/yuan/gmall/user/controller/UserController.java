@@ -1,28 +1,45 @@
-package com.yuan.gmall.user.controller;
-
+package com.atguigu.gmall.user.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.yuan.gmall.bean.UserInfo;
+import com.yuan.gmall.bean.UmsMember;
+import com.yuan.gmall.bean.UmsMemberReceiveAddress;
 import com.yuan.gmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-@RestController
+@Controller
 public class UserController {
 
     @Reference
-    private UserService userService;
+    UserService userService;
 
-    @RequestMapping("userInfoList")
-    public ResponseEntity<List<UserInfo>> userInfoList(HttpServletRequest request){
+    @RequestMapping("getReceiveAddressByMemberId")
+    public List<UmsMemberReceiveAddress> getReceiveAddressByMemberId(String memberId){
 
-        List<UserInfo> userInfoList = userService.userInfoList();
+        List<UmsMemberReceiveAddress> umsMemberReceiveAddresses = userService.getReceiveAddressByMemberId(memberId);
 
-        return ResponseEntity.ok(userInfoList);
+        return umsMemberReceiveAddresses;
     }
+
+
+    @RequestMapping("getAllUser")
+    @ResponseBody
+    public List<UmsMember> getAllUser(){
+
+        List<UmsMember> umsMembers = userService.getAllUser();
+        return umsMembers;
+    }
+
+    @RequestMapping("index")
+    @ResponseBody
+    public String index(){
+        return "hello user";
+    }
+
+
+
 }
