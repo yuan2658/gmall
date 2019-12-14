@@ -1,6 +1,5 @@
 package com.yuan.gmall.manage.service.impl;
 
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.yuan.gmall.bean.PmsBaseCatalog1;
 import com.yuan.gmall.bean.PmsBaseCatalog2;
