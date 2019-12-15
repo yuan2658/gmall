@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class PmsUploadUtil {
 
-    public static String uploadImage(MultipartFile multipartFile,String imgUrl) {
+    public static String uploadImage(MultipartFile multipartFile, String imgUrl) {
         // 上传图片到服务器
         // 配置fdfs的全局链接地址
         // 获得配置文件的路径
