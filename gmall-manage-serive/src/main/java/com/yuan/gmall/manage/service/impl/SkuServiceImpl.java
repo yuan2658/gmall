@@ -1,6 +1,7 @@
 package com.yuan.gmall.manage.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSON;
 import com.yuan.gmall.bean.PmsSkuAttrValue;
 import com.yuan.gmall.bean.PmsSkuImage;
 import com.yuan.gmall.bean.PmsSkuInfo;
@@ -10,7 +11,9 @@ import com.yuan.gmall.manage.mapper.PmsSkuImageMapper;
 import com.yuan.gmall.manage.mapper.PmsSkuInfoMapper;
 import com.yuan.gmall.manage.mapper.PmsSkuSaleAttrValueMapper;
 import com.yuan.gmall.service.SkuService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import redis.clients.jedis.Jedis;
 
 import java.util.List;
 
@@ -59,5 +62,21 @@ public class SkuServiceImpl implements SkuService {
         }
 
 
+    }
+
+    @Override
+    public PmsSkuInfo getSkuById(String skuId) {
+        PmsSkuInfo pmsSkuInfo =new PmsSkuInfo();
+        pmsSkuInfo.setId(skuId);
+        return pmsSkuInfoMapper.selectOne(pmsSkuInfo);
+    }
+
+
+    @Override
+    public List<PmsSkuInfo> getSkuSaleAttrValueListBySpu(String productId) {
+
+        List<PmsSkuInfo> pmsSkuInfos = pmsSkuInfoMapper.selectSkuSaleAttrValueListBySpu(productId);
+
+        return pmsSkuInfos;
     }
 }
