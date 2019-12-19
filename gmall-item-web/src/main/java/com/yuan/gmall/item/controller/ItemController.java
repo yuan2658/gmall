@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.alibaba.fastjson.JSON;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,9 +30,13 @@ public class ItemController {
     SpuService spuService;
 
     @RequestMapping("{skuId}.html")
-    public String item(@PathVariable String skuId, ModelMap map){
+    public String item(HttpServletRequest request, @PathVariable String skuId, ModelMap map){
 
-        PmsSkuInfo pmsSkuInfo = skuService.getSkuById(skuId);
+        String remoteAddr = request.getRemoteAddr();
+
+        // request.getHeader("");// nginx负载均衡
+
+        PmsSkuInfo pmsSkuInfo = skuService.getSkuById(skuId,remoteAddr);
 
         //sku对象
         map.put("skuInfo",pmsSkuInfo);
@@ -55,10 +61,6 @@ public class ItemController {
         // 将sku的销售属性hash表放到页面
         String skuSaleAttrHashJsonStr = JSON.toJSONString(skuSaleAttrHash);
         map.put("skuSaleAttrHashJsonStr",skuSaleAttrHashJsonStr);
-
-
-
-
         return "item";
     }
 

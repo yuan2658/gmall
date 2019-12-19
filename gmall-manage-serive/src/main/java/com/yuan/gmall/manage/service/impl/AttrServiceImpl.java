@@ -35,11 +35,9 @@ public class AttrServiceImpl implements AttrService {
         pmsBaseAttrInfo.setCatalog3Id(catalog3Id);
         List<PmsBaseAttrInfo> pmsBaseAttrInfos = pmsBaseAttrInfoMapper.select(pmsBaseAttrInfo);
         for (PmsBaseAttrInfo baseAttrInfo : pmsBaseAttrInfos) {
-
-            List<PmsBaseAttrValue> pmsBaseAttrValues = new ArrayList<>();
             PmsBaseAttrValue pmsBaseAttrValue = new PmsBaseAttrValue();
             pmsBaseAttrValue.setAttrId(baseAttrInfo.getId());
-            pmsBaseAttrValues = pmsBaseAttrValueMapper.select(pmsBaseAttrValue);
+            List<PmsBaseAttrValue> pmsBaseAttrValues = pmsBaseAttrValueMapper.select(pmsBaseAttrValue);
             baseAttrInfo.setAttrValueList(pmsBaseAttrValues);
         }
 
@@ -54,12 +52,10 @@ public class AttrServiceImpl implements AttrService {
             // id为空，保存
             // 保存属性
             pmsBaseAttrInfoMapper.insertSelective(pmsBaseAttrInfo);//insert insertSelective 是否将null插入数据库
-
             // 保存属性值
             List<PmsBaseAttrValue> attrValueList = pmsBaseAttrInfo.getAttrValueList();
             for (PmsBaseAttrValue pmsBaseAttrValue : attrValueList) {
                 pmsBaseAttrValue.setAttrId(pmsBaseAttrInfo.getId());
-
                 pmsBaseAttrValueMapper.insertSelective(pmsBaseAttrValue);
             }
         } else {
