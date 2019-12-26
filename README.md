@@ -1,29 +1,22 @@
 # gmall
 简单的电商系统
 
+各个项目端口号
 ------------------------
-12.6 安装zookeeper和dubbo
 
-zookeeper安装: 下载压缩包直接解压  
-配置文件zoo_sample.cfg --> zoo.cfg 设置dataDir/dataLogDir 其他默认
 
-dubbo安装: 下载dubbo-admin 打war包 直接解压
-配置tomcat server.xml  
-```<Context docBase="/opt/dubbo-admin/" path="" reloadable="true"/>```
+gmall-user-service用户服务的service层8070
+gmall-user-web用户服务的web层8080
 
---------------------------
-12.7 zookeeper，dubbo和springboot整合
 
-文件配置参数 包名一致 注意包版本冲突
+gmall-manage-service后台管理的service层8071
+gmall-manage-web后台管理的web层8081
 
------------------------
-12.8  后台管理模块 
-商品属性分类查询、属性信息的添加
+gmall-item-service前台的商品详情服务 8072
+gmall-item-web前台的商品详情展示 8082
 
------------------------
-12.10 fastfds的安装
 
-----------------------
-12.14 
-item-web
+
+
+
  
