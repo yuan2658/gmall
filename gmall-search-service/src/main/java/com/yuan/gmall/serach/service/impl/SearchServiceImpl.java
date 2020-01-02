@@ -59,7 +59,7 @@ public class SearchServiceImpl implements SearchService{
 
     private String getSearchDsl(PmsSearchParam pmsSearchParam) {
 
-        List<PmsSkuAttrValue> skuAttrValueList = pmsSearchParam.getSkuAttrValueList();
+        String[] skuAttrValueList = pmsSearchParam.getValueId();
         String keyword = pmsSearchParam.getKeyword();
         String catalog3Id = pmsSearchParam.getCatalog3Id();
 
@@ -74,11 +74,12 @@ public class SearchServiceImpl implements SearchService{
             boolQueryBuilder.filter(termQueryBuilder);
         }
         if(skuAttrValueList!=null){
-            for (PmsSkuAttrValue pmsSkuAttrValue : skuAttrValueList) {
-                TermQueryBuilder termQueryBuilder = new TermQueryBuilder("skuAttrValueList.valueId",pmsSkuAttrValue.getValueId());
+            for (String pmsSkuAttrValue : skuAttrValueList) {
+                TermQueryBuilder termQueryBuilder = new TermQueryBuilder("skuAttrValueList.valueId",pmsSkuAttrValue);
                 boolQueryBuilder.filter(termQueryBuilder);
             }
         }
+
 
         // must
         if(StringUtils.isNotBlank(keyword)){
