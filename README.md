@@ -18,6 +18,8 @@ gmall-item-web前台的商品详情展示 8082
 gmall-searh-service搜索功能service层8073
 gmall-search-web搜索功能web层 8083
 
+gmall-cart-service购物车功能service层8074
+gmall-cart-web购物车功能web层 8084
 
 
 
