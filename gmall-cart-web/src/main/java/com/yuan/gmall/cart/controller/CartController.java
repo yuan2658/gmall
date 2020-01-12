@@ -45,13 +45,15 @@ public class CartController {
     @LoginRequired(loginSuccess = false)
     public String checkCart(String isChecked, String skuId, HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap modelMap) {
 
-        String memberId = "1";
+        String memberId = (String)request.getAttribute("memberId");
+        String nickname = (String)request.getAttribute("nickname");
 
         // 调用服务，修改状态
         OmsCartItem omsCartItem = new OmsCartItem();
         omsCartItem.setMemberId(memberId);
         omsCartItem.setProductSkuId(skuId);
         omsCartItem.setIsChecked(isChecked);
+        omsCartItem.setMemberNickname(nickname);
         cartService.checkCart(omsCartItem);
 
         // 将最新的数据从缓存中查出，渲染给内嵌页
@@ -70,7 +72,11 @@ public class CartController {
     public String cartList(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap modelMap) {
 
         List<OmsCartItem> omsCartItems = new ArrayList<>();
-        String memberId = "1";
+        String memberId = (String)request.getAttribute("memberId");
+        String nickname = (String)request.getAttribute("nickname");
+
+        modelMap.put("memberId",memberId);
+        modelMap.put("nickname",nickname);
 
         if(StringUtils.isNotBlank(memberId)){
             // 已经登录查询db
@@ -97,7 +103,7 @@ public class CartController {
 
     @RequestMapping("addToCart")
     @LoginRequired(loginSuccess = false)
-    public String addToCart(String skuId, int quantity, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    public String addToCart(String skuId, String quantity, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         List<OmsCartItem> omsCartItems = new ArrayList<>();
 
         // 调用商品服务查询商品信息
@@ -121,7 +127,7 @@ public class CartController {
 
 
         // 判断用户是否登录
-        String memberId = "1";//"1";
+        String memberId = (String)request.getAttribute("memberId");
 
         if (StringUtils.isBlank(memberId)) {
             // 用户没有登录

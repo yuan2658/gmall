@@ -264,7 +264,6 @@
 								<form id="itemForm" action="http://localhost:8084/addToCart" method="post">
 									<input type="text" name="quantity"  value="1"/>
 									<input type="hidden" name="skuId"  th:value="${skuInfo?.id}" />
-
 									<div class="box-btns-one1">
 
 										<div>
@@ -1014,7 +1013,7 @@
 	<script type="text/javascript">
         function addToCart(obj){
             var canClick = $(obj).attr("canClick");
-            if(canClick=='0'){
+            if(canClick==='0'){
                 return ;
             }
             $("#itemForm").submit();
