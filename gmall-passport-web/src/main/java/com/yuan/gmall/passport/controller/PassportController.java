@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import com.yuan.gmall.bean.UmsMember;
 import com.yuan.gmall.service.UserService;
+import com.yuan.gmall.util.CookieUtil;
 import com.yuan.gmall.util.JwtUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,7 +48,7 @@ public class PassportController {
 
     @RequestMapping("login")
     @ResponseBody
-    public String login(UmsMember umsMember, HttpServletRequest request){
+    public String login(UmsMember umsMember, HttpServletRequest request, HttpServletResponse response){
 
         String token = "";
 
@@ -86,19 +88,23 @@ public class PassportController {
             // 将token存入redis一份
             userService.addUserToken(token,memberId);
 
+            CookieUtil.setCookie(request,response,"token",token,60*60*2,true);
+
         }else{
             // 登录失败
             token = "fail";
         }
-
         return token;
 
     }
 
     @RequestMapping("index")
     public String index(String ReturnUrl, ModelMap map){
-
-        map.put("ReturnUrl",ReturnUrl);
+        if(StringUtils.isBlank(ReturnUrl)){
+            map.put("ReturnUrl","http://localhost:8083/index");
+        }else {
+            map.put("ReturnUrl",ReturnUrl);
+        }
         return "index";
     }
 }

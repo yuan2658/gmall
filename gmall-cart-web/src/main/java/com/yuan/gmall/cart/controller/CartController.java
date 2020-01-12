@@ -128,6 +128,7 @@ public class CartController {
 
         // 判断用户是否登录
         String memberId = (String)request.getAttribute("memberId");
+        String nickname = (String)request.getAttribute("nickname");
 
         if (StringUtils.isBlank(memberId)) {
             // 用户没有登录
@@ -165,7 +166,7 @@ public class CartController {
             if(omsCartItemFromDb==null){
                 // 该用户没有添加过当前商品
                 omsCartItem.setMemberId(memberId);
-                omsCartItem.setMemberNickname("test小明");
+                omsCartItem.setMemberNickname(nickname);
                 omsCartItem.setQuantity(new BigDecimal(quantity));
                 cartService.addCart(omsCartItem);
 
