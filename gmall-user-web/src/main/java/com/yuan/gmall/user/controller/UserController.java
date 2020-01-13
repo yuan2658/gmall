@@ -1,6 +1,7 @@
 package com.yuan.gmall.user.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.yuan.gmall.annotations.LoginRequired;
 import com.yuan.gmall.bean.UmsMember;
 import com.yuan.gmall.bean.UmsMemberReceiveAddress;
 import com.yuan.gmall.service.UserService;

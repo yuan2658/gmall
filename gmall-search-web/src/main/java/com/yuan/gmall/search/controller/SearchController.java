@@ -1,6 +1,7 @@
 package com.yuan.gmall.search.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.yuan.gmall.annotations.LoginRequired;
 import com.yuan.gmall.bean.*;
 import com.yuan.gmall.service.AttrService;
 import com.yuan.gmall.service.SearchService;
@@ -151,6 +152,7 @@ public class SearchController {
 
 
     @RequestMapping("index")
+    @LoginRequired(loginSuccess = false)
     public String index(){
         return "index";
     }

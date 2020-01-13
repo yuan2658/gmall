@@ -22,5 +22,9 @@ gmall-cart-service购物车功能service层8074
 gmall-cart-web购物车功能web层 8084
 
 
+gmall-passport-we认证中心功能web层 8085
+
+gmall-order-service订单功能service层8076
+gmall-order-web订单功能web层 8086
 
  

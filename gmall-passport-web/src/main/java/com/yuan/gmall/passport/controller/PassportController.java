@@ -88,8 +88,6 @@ public class PassportController {
             // 将token存入redis一份
             userService.addUserToken(token,memberId);
 
-            CookieUtil.setCookie(request,response,"token",token,60*60*2,true);
-
         }else{
             // 登录失败
             token = "fail";

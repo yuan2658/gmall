@@ -41,7 +41,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             token = oldToken;
         }
 
-        String newToken = CookieUtil.getCookieValue(request, "token", true);
+        String newToken = request.getParameter("token");
         if (StringUtils.isNotBlank(newToken)) {
             token = newToken;
         }
