@@ -27,4 +27,5 @@ gmall-passport-we认证中心功能web层 8085
 gmall-order-service订单功能service层8076
 gmall-order-web订单功能web层 8086
 
- 
+ gmall-payment-service支付功能service层 8077
+ gmall-payment-web支付功能web层 8087

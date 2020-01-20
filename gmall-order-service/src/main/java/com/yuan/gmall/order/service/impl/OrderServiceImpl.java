@@ -11,6 +11,7 @@ import com.yuan.gmall.service.OrderService;
 import com.yuan.gmall.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.Jedis;
+import tk.mybatis.mapper.entity.Example;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -74,5 +75,21 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    @Override
+    public OmsOrder getOrderByOutTradeNo(String outTradeNo) {
+        OmsOrder omsOrder = new OmsOrder();
+        omsOrder.setOrderSn(outTradeNo);
+        OmsOrder omsOrder1 = omsOrderMapper.selectOne(omsOrder);
+        return omsOrder1;
+    }
+
+    @Override
+    public void updateOrder(OmsOrder omsOrder) {
+        Example e = new Example(OmsOrder.class);
+        e.createCriteria().andEqualTo("orderSn",omsOrder.getOrderSn());
+        OmsOrder omsOrderUpdate = new OmsOrder();
+        omsOrderUpdate.setStatus(1);
+        omsOrderMapper.updateByExampleSelective(omsOrderUpdate,e);
+    }
 
 }
