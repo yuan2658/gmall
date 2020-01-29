@@ -8,11 +8,14 @@ import com.yuan.gmall.order.mapper.OmsOrderItemMapper;
 import com.yuan.gmall.order.mapper.OmsOrderMapper;
 import com.yuan.gmall.service.CartService;
 import com.yuan.gmall.service.OrderService;
+import com.yuan.gmall.utils.ActiveMqUtil;
 import com.yuan.gmall.utils.RedisUtil;
+import org.apache.activemq.command.ActiveMQMapMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.Jedis;
 import tk.mybatis.mapper.entity.Example;
 
+import javax.jms.*;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
@@ -29,6 +32,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     OmsOrderItemMapper omsOrderItemMapper;
+
+    @Autowired
+    ActiveMqUtil activeMqUtil;
 
     @Reference
     CartService cartService;
@@ -87,9 +93,39 @@ public class OrderServiceImpl implements OrderService {
     public void updateOrder(OmsOrder omsOrder) {
         Example e = new Example(OmsOrder.class);
         e.createCriteria().andEqualTo("orderSn",omsOrder.getOrderSn());
+
         OmsOrder omsOrderUpdate = new OmsOrder();
-        omsOrderUpdate.setStatus(1);
-        omsOrderMapper.updateByExampleSelective(omsOrderUpdate,e);
+        omsOrderUpdate.setStatus("1");
+
+        // 发送一个订单已支付的队列，提供给库存消费
+        Connection connection = null;
+        Session session = null;
+        try{
+            connection = activeMqUtil.getConnectionFactory().createConnection();
+            session = connection.createSession(true,Session.SESSION_TRANSACTED);
+            Queue payhmentSuccessQueue = session.createQueue("ORDER_PAY_QUEUE");
+            MessageProducer producer = session.createProducer(payhmentSuccessQueue);
+            //TextMessage textMessage = new ActiveMQTextMessage();//字符串文本
+            // hash结构
+            MapMessage mapMessage = new ActiveMQMapMessage();
+            omsOrderMapper.updateByExampleSelective(omsOrderUpdate,e);
+            producer.send(mapMessage);
+            session.commit();
+        }catch (Exception ex){
+            // 消息回滚
+            try {
+                session.rollback();
+            } catch (JMSException e1) {
+                e1.printStackTrace();
+            }
+        }finally {
+            try {
+                connection.close();
+                session.close();
+            } catch (JMSException e1) {
+                e1.printStackTrace();
+            }
+        }
     }
 
 }
