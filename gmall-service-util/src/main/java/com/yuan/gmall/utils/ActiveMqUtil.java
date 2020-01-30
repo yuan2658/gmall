@@ -12,7 +12,7 @@ public class ActiveMqUtil {
 
     PooledConnectionFactory pooledConnectionFactory=null;
 
-    public void init(String brokerUrl) {
+    public ConnectionFactory init(String brokerUrl) {
         ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory(brokerUrl);
          //加入连接池
         pooledConnectionFactory=new PooledConnectionFactory(factory);
@@ -20,6 +20,8 @@ public class ActiveMqUtil {
         pooledConnectionFactory.setReconnectOnException(true);
         pooledConnectionFactory.setMaxConnections(5);
         pooledConnectionFactory.setExpiryTimeout(10000);
+
+        return pooledConnectionFactory;
     }
 
     public ConnectionFactory getConnectionFactory(){

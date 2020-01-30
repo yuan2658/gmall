@@ -34,16 +34,16 @@ public class ActiveMqConfig {
     /**
      * 定义一个消息监听器连接工厂，这里定义的是点对点模式的监听器连接工厂
      *
-     * @param activeMQConnectionFactory
+     * @param activeMqConnectionFactory
      * @return
      */
     @Bean(name = "jmsQueueListener")
-    public DefaultJmsListenerContainerFactory jmsQueueListenerContainerFactory(ActiveMQConnectionFactory activeMQConnectionFactory) {
+    public DefaultJmsListenerContainerFactory jmsQueueListenerContainerFactory(ActiveMQConnectionFactory activeMqConnectionFactory) {
         DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
         if ("disabled".equals(listenerEnable)) {
             return null;
         }
-        factory.setConnectionFactory(activeMQConnectionFactory);
+        factory.setConnectionFactory(activeMqConnectionFactory);
         //设置并发数
         factory.setConcurrency("5");
         //重连间隔时间
