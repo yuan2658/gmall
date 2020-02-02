@@ -20,7 +20,7 @@
 
         <dependency>
             <groupId>com.yuan.gmall</groupId>
-            <artifactId>common-util</artifactId>
+            <artifactId>gmall-common-util</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
