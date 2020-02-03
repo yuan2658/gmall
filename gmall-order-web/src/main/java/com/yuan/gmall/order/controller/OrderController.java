@@ -30,18 +30,17 @@ public class OrderController {
 
     @Reference
     CartService cartService;
-
     @Reference
     UserService userService;
     @Reference
     OrderService orderService;
-
     @Reference
     SkuService skuService;
 
     @RequestMapping("submitOrder")
     @LoginRequired(loginSuccess = true)
     public ModelAndView submitOrder(String receiveAddressId, BigDecimal totalAmount, String tradeCode, HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap modelMap) {
+        ModelAndView mv;
 
         String memberId = (String) request.getAttribute("memberId");
         String nickname = (String) request.getAttribute("nickname");
@@ -98,7 +97,7 @@ public class OrderController {
                     // 检价
                     boolean b = skuService.checkPrice(omsCartItem.getProductSkuId(),omsCartItem.getPrice());
                     if (!b) {
-                        ModelAndView mv = new ModelAndView("tradeFail");
+                        mv = new ModelAndView("tradeFail");
                         return mv;
                     }
                     // 验库存,远程调用库存系统
@@ -126,13 +125,12 @@ public class OrderController {
             orderService.saveOrder(omsOrder);
 
             // 重定向到支付系统
-            // 重定向到支付系统
-            ModelAndView mv = new ModelAndView("redirect:http://localhost:8087/index");
+            mv = new ModelAndView("redirect:http://localhost:8087/index");
             mv.addObject("outTradeNo",outTradeNo);
             mv.addObject("totalAmount",totalAmount);
             return mv;
         } else {
-            ModelAndView mv = new ModelAndView("tradeFail");
+            mv = new ModelAndView("tradeFail");
             return mv;
         }
     }
